@@ -23,11 +23,12 @@ type Distance = Double
 type City = (Double, Double)
 type Route = [City]
 
--- | travellingSalesman : Takes a list of cities (represented by coordinate points)
--- and returns the list shuffled, such that visiting each city in the order
--- returned minimises the total travel cost (eucledian distance)
-travellingSalesman :: [City] -> Route
-travellingSalesman = undefined
+-- | tsp (travelling salesperson problem) : Takes a list of cities
+-- (represented by coordinate points) and returns the list shuffled,
+-- such that visiting each city in the order returned minimises the
+-- total travel cost (eucledian distance)
+tsp :: [City] -> Route
+tsp = undefined
 
 -- | cost : Returns the total distance for a particular route
 cost :: Route -> Distance
