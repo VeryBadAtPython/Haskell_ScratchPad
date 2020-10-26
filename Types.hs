@@ -47,3 +47,62 @@ sumMap = undefined
 -- of two lists, seperating all the Left a and Right b elements.
 -- sumExtract :: ???
 sumExtract = undefined 
+
+-- This data type represents construction workers
+-- Each worker has a name, an age, and a job.
+-- A crew is a list of workers.
+data Job = Digger | Driver | Builder | Foreman | Manager 
+    deriving (Show, Eq)
+data Worker = Worker Name Age Job
+    deriving Show
+type Name = String
+type Age = Int
+
+
+type Crew = [Worker]
+
+apolloCrew :: Crew 
+apolloCrew = [Worker "Alice" 26 Driver,
+            Worker "Bob" 21 Digger,
+            Worker "Charlie" 34 Foreman,
+            Worker "Daniel" 24 Digger,
+            Worker "Eve" 31 Builder,
+            Worker "Frank" 38 Manager,
+            Worker "Grace" 34 Builder]
+
+
+-- `reassign` : Takes a worker, and gives them a new job.
+-- reassign :: ???
+reassign = undefined
+
+-- `birthday` : A worker has had a birthday today! Increase their age by one.
+-- birthday :: ???
+birthday = undefined
+
+
+-- `isOnCrew` : Checks if a particular worker is on a crew.
+-- isOnCrew :: ???
+isOnCrew = undefined
+
+
+-- `findSenior` : Finds and returns the name of the most senior (oldest) worker on a crew.
+-- findSenior :: ???
+findSenior = undefined
+
+-- `filterJob` : Given a crew, returns all workers that match a given job.
+-- filterJob :: ???
+filterJob = undefined
+
+
+type Dollars = Int
+
+-- Define a sensible type for PayRate, and then define the wages that ACC pays.
+
+-- data PayRate = ???
+
+-- apolloWages :: PayRate 
+apolloWages = undefined
+
+-- `crewCost` : Given a crew, and a payrate, and a number of hours, determines how much
+-- it would cost to hire the crew for that duration of time.
+crewCost = undefined
