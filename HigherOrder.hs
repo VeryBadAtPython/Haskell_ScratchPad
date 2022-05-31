@@ -28,7 +28,10 @@ l2Norm list = sqrt $ foldr (+) 0 $ map (\x->x*x) list
 -- cesaroSum : Takes a list of numbers, and returns a list, where the nth element
 -- is the average of the first n terms of the input list.
 cesaroSum :: (Fractional a) => [a] -> [a]
-cesaroSum list = case list of
+cesaroSum list = cesaroSum' (reverse list)
+
+cesaroSum' :: (Fractional a) => [a] -> [a]
+cesaroSum' list = case list of
     []   -> []
     x:xs -> (cesaroSum xs)++[arithMean (x:xs)]
 
