@@ -67,22 +67,43 @@ insertAt list e depth = case (list,depth) of
 -- runLengthEncoding : Takes a list, and returns a list of tuples,
 -- counting how many times that element was duplicated consecutively.
 runLengthEncoding :: (Eq a) => [a] -> [(a,Integer)]
-runLengthEncoding list = map (\y -> (y, occurs y list)) list
+runLengthEncoding list = reverse (occurs list [])
 
-occurs :: (Eq a) => a -> [a] -> Integer
-occurs e list = case list of
-    x:xs
-      | x == e    -> 1 + occurs e xs
-      | otherwise -> occurs e xs
-    []              -> 0
+occurs :: (Eq a) => [a] -> [(a,Integer)] -> [(a,Integer)]
+occurs list acc = case (list,acc) of
+    ([],_)          -> acc
+    (x:xs,(y,n):ys)
+        | x==y      -> occurs xs ((x,n+1):ys)
+        | otherwise -> occurs xs ((x,1):acc)
+    (x:xs,[])       -> occurs xs [(x,1)]
+
 
 
 -- runLengthDecoding : Take the output from `runLengthEncoding`, and 
 -- reconstruct the original string.
 runLengthDecoding :: [(a,Integer)] -> [a]
-runLengthDecoding list = map (\(x,_y)->x) list
+runLengthDecoding list = concat (map nTimes list)
+
+nTimes :: (a,Integer) -> [a]
+nTimes (e,n)
+    | n >  0 = e:(nTimes (e,n-1))
+    | n <= 0 = []
+nTimes (_,_) = []
 
 -- transpose : Takes [[a]] as input, and transpose it 
 -- (swap rows with columns). (Don't use the transposes function in Data.List here)
 transpose :: [[a]] -> [[a]]
-transpose = undefined
+transpose []      = []
+transpose ([]:ys) = transpose ys
+transpose list    = (headList list []) : (transpose (map myTail list))
+
+
+headList :: [[a]] -> [a] -> [a]
+headList (x:xs) acc =  case x of 
+        y:_ -> headList xs (y:acc)
+        _   -> reverse acc
+headList [] acc = reverse acc 
+
+myTail :: [a] -> [a]
+myTail []     = []
+myTail (_:xs) = xs
