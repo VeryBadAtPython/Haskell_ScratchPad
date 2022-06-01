@@ -23,12 +23,44 @@ type Name = String
 
 -- | Takes a family tree, and returns all the names of matching ancestors
 ancestors :: Person -> FamilyTree -> [Name]
-ancestors = undefined
+ancestors (My (Grand a)) (Node m _ f) = (ancestors (My a) m) ++ (ancestors (My a) f)
+ancestors (My Mother) (Node _ _ m)    = ancestors Me m
+ancestors (My Father) (Node f _ _)    = ancestors Me f
+ancestors Me          (Node _ n _)    = [n] 
+ancestors _      Null                 = []
+
 
 -- | Takes a family tree, and a name, and returns what kind of ancestor they are,
 -- | if they can be found.
+{-
 kindAncestor :: FamilyTree -> Name -> Maybe Person
-kindAncestor = undefined
+kindAncestor tree name = case (inTree tree name) of
+    (Node _ (Just x) _) -> Just x
+    _                -> Nothing
+
+type EvalFTree = BinaryTree (Maybe Ancestor)
+
+inTree :: FamilyTree -> Name -> EvalFTree
+inTree tree name = case tree of
+    (Node m n f)
+        | nameIn m  -> Node Null (Just Mother) Null
+        | nameIn f  -> Node Null (Just Father) Null
+        | otherwise -> case (inTree m, inTree f) of
+            ((Node Null (Just x) Null),_) -> ((Node Null (Just (Grand x)) Null),_)
+            (_,(Node Null (Just x) Null)) -> ((Node Null (Just (Grand x)) Null),_)
+            _                             -> Nothing
+
+
+nameIn :: Name -> FamilyTree -> Bool
+nameIn name tree = case tree of
+    (Node m n f)
+        | n == name -> True
+        | otherwise -> False
+    _               -> False
+        
+-}
+
+
 
 
 -- | The family tree of David Quarel (that's me!) 3 generations back
