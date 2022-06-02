@@ -15,8 +15,11 @@ treeMystery tree = case tree of
 
 
 data Person = Me | My Ancestor
+    deriving (Show)
+
 data Ancestor = Father | Mother | Grand Ancestor 
-    
+    deriving (Show)
+
 type FamilyTree = BinaryTree Name
 type Name = String
 
@@ -32,33 +35,28 @@ ancestors _      Null                 = []
 
 -- | Takes a family tree, and a name, and returns what kind of ancestor they are,
 -- | if they can be found.
-{-
+
 kindAncestor :: FamilyTree -> Name -> Maybe Person
-kindAncestor tree name = case (inTree tree name) of
-    (Node _ (Just x) _) -> Just x
-    _                -> Nothing
+kindAncestor Null         _    = Nothing
 
-type EvalFTree = BinaryTree (Maybe Ancestor)
-
-inTree :: FamilyTree -> Name -> EvalFTree
-inTree tree name = case tree of
-    (Node m n f)
-        | nameIn m  -> Node Null (Just Mother) Null
-        | nameIn f  -> Node Null (Just Father) Null
-        | otherwise -> case (inTree m, inTree f) of
-            ((Node Null (Just x) Null),_) -> ((Node Null (Just (Grand x)) Null),_)
-            (_,(Node Null (Just x) Null)) -> ((Node Null (Just (Grand x)) Null),_)
-            _                             -> Nothing
+kindAncestor (Node m n f) name
+    | nameIn m name = Just (My Father)
+    | nameIn f name = Just (My Mother)
+    | n == name     = Just Me
+    | otherwise     = case (kindAncestor m name, kindAncestor f name) of
+        (Just (My x),_) -> Just (My (Grand x))
+        (_,Just (My x)) -> Just (My (Grand x))
+        _               -> Nothing
 
 
-nameIn :: Name -> FamilyTree -> Bool
-nameIn name tree = case tree of
-    (Node m n f)
+nameIn :: FamilyTree -> Name -> Bool
+nameIn tree name = case tree of
+    (Node _ n _)
         | n == name -> True
         | otherwise -> False
     _               -> False
         
--}
+
 
 
 
