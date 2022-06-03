@@ -5,11 +5,27 @@ import System.IO.Unsafe
 fizzBuzz :: Integer -> [Integer]
 fizzBuzz = undefined
 
+
+
+
+
+
 myMap :: (a -> b) -> [a] -> [b]
-myMap = undefined
+myMap f list = case list of
+    []   -> []
+    x:xs -> (f x):myMap f xs
 
 myFilter :: (a -> Bool) -> [a] -> [a]
-myFilter = undefined
+myFilter _ [] = []
+myFilter f (x:xs)
+    | (f x)     = x:myFilter f xs
+    | otherwise = myFilter f xs
+
+
+
+
+
+
 
 thickDiagonal :: Integer -> [(Integer, Integer)]
 thickDiagonal n = undefined

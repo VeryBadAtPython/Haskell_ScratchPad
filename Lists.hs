@@ -90,12 +90,16 @@ nTimes (e,n)
     | n <= 0 = []
 nTimes (_,_) = []
 
+
+
+
+
 -- transpose : Takes [[a]] as input, and transpose it 
 -- (swap rows with columns). (Don't use the transposes function in Data.List here)
 transpose :: [[a]] -> [[a]]
 transpose []      = []
 transpose ([]:ys) = transpose ys
-transpose list    = (headList list []) : (transpose (map myTail list))
+transpose list    = (headList list []) : (transpose (map tail list))
 
 
 headList :: [[a]] -> [a] -> [a]
@@ -104,6 +108,7 @@ headList (x:xs) acc =  case x of
         _   -> reverse acc
 headList [] acc = reverse acc 
 
-myTail :: [a] -> [a]
-myTail []     = []
-myTail (_:xs) = xs
+
+
+
+
