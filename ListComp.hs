@@ -50,3 +50,9 @@ suggestWord = undefined
 dictionary :: [String]
 dictionary = lines $ unsafePerformIO $ readFile "dictionary.txt"
 
+
+foo :: String -> Int -> Bool
+foo _ _ = True
+
+rekt :: Int -> Int -> Bool
+rekt = foo . show
