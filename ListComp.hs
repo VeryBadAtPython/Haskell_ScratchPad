@@ -43,12 +43,6 @@ thickDiagonal = undefined
 pythagoreanTriples :: Integer -> [(Integer, Integer, Integer)]
 pythagoreanTriples = undefined
 
-suggestWord :: String -> [String] -> [String]
-suggestWord = undefined
-
---don't worry about this
-dictionary :: [String]
-dictionary = lines $ unsafePerformIO $ readFile "dictionary.txt"
 
 
 foo :: String -> Int -> Bool
