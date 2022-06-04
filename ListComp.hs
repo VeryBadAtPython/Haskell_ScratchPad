@@ -24,11 +24,21 @@ myFilter f (x:xs)
 
 
 
+fastFib :: Integer -> Integer
+fastFib n
+    | n<0 = undefined
+    | otherwise = help n 0 1
+    where
+        help 0 curr _       = curr
+        help n curr prev = help (n-1) (curr + prev) curr
+
+
+
 
 
 
 thickDiagonal :: Integer -> [(Integer, Integer)]
-thickDiagonal n = undefined
+thickDiagonal = undefined
 
 pythagoreanTriples :: Integer -> [(Integer, Integer, Integer)]
 pythagoreanTriples = undefined
@@ -39,3 +49,4 @@ suggestWord = undefined
 --don't worry about this
 dictionary :: [String]
 dictionary = lines $ unsafePerformIO $ readFile "dictionary.txt"
+
